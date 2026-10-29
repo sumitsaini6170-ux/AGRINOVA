@@ -1,0 +1,323 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 1,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Soil Moisture",
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bfzvazlb5d91cf"
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"farm\") |> range(start: -15m) |> filter(fn: (r) => r._measurement == \"telemetry\") |> filter(fn: (r) => r._field == \"moisture\") |> last()",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Temperature",
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bfzvazlb5d91cf"
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"farm\") |> range(start: -15m) |> filter(fn: (r) => r._measurement == \"telemetry\") |> filter(fn: (r) => r._field == \"temperature\") |> last()",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Humidity",
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bfzvazlb5d91cf"
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"farm\") |> range(start: -15m) |> filter(fn: (r) => r._measurement == \"telemetry\") |> filter(fn: (r) => r._field == \"humidity\") |> last()",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Water Tank",
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bfzvazlb5d91cf"
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"farm\") |> range(start: -15m) |> filter(fn: (r) => r._measurement == \"telemetry\") |> filter(fn: (r) => r._field == \"water\") |> last()",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Soil Moisture - Live",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bfzvazlb5d91cf"
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"farm\") |> range(start: -1h) |> filter(fn: (r) => r._measurement == \"telemetry\") |> filter(fn: (r) => r._field == \"moisture\")",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "LSTM Forecast",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bfzvazlb5d91cf"
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"farm\") |> range(start: -1h) |> filter(fn: (r) => r._measurement == \"forecast\") |> filter(fn: (r) => r._field == \"next_hr\")",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Pump Status",
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 13
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bfzvazlb5d91cf"
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"farm\") |> range(start: -15m) |> filter(fn: (r) => r._measurement == \"pump\") |> filter(fn: (r) => r._field == \"state\") |> last()",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "OFF"
+                },
+                "1": {
+                  "text": "ON"
+                }
+              }
+            }
+          ]
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Rainfall",
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 8,
+        "y": 13
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bfzvazlb5d91cf"
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"farm\") |> range(start: -15m) |> filter(fn: (r) => r._measurement == \"telemetry\") |> filter(fn: (r) => r._field == \"rainfall\") |> last()",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "mm"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Soil pH",
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 13
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bfzvazlb5d91cf"
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"farm\") |> range(start: -15m) |> filter(fn: (r) => r._measurement == \"telemetry\") |> filter(fn: (r) => r._field == \"ph\") |> last()",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "min": 0,
+          "max": 14
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        }
+      }
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": [
+    "smartsoil",
+    "iot",
+    "lstm",
+    "irrigation"
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "title": "Smart Soil AI - Field Overview",
+  "uid": "smartsoil-main"
+}
